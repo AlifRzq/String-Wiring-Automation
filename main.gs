@@ -186,7 +186,6 @@ function allocateNextInverterInternal_(ss, {silent}) {
       return {ok:false, message:'STRING inventory not found / empty. Expected sheet "STRING_INVENTORY" OR any sheet with header "String 1".'};
     }
 
-    // ✅ FIX HERE
     const usedKeySet = readUsedSetActiveOnly_(logSh);
     const availGroups = buildAvailableGroups_(invData, usedKeySet);
     if (availGroups.length === 0) {
@@ -238,8 +237,6 @@ function resetAllAllocations() {
   const ss = SpreadsheetApp.getActive();
   const ui = SpreadsheetApp.getUi();
 
-  // Optional safety prompt (kalau kamu mau super aman).
-  // Kalau kamu nggak mau prompt, comment 5 baris ini.
   const res = ui.alert(
     'RESET ALL',
     'Ini akan menghapus SEMUA output inverter, ALLOC_LOG, UNUSED_STRINGS, dan set status inverter jadi PENDING.\n\nLanjut?',
@@ -297,7 +294,6 @@ function resetAllAllocations() {
     for (let i = 0; i < statusVals.length; i++) {
       const st = String(statusVals[i][0] || '').trim().toUpperCase();
       if (st === 'ALLOCATED' || st === 'FINISHED') statusVals[i][0] = 'PENDING';
-      // kosongkan semua NstringsUsed (biar clean)
       nUsedVals[i][0] = '';
     }
 
